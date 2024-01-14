@@ -29,7 +29,7 @@ $ . .venv/bin/activate
 (.venv) $ pip install -r requirements.txt
 ```
 
-다 사용 후 비황성화 (선택사항)
+사용 후 비황성화 (선택사항)
 
 ```commandline
 # deactivate env
