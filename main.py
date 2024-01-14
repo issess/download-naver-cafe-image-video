@@ -72,6 +72,8 @@ def file_exists(file_path):
 
 def createChromeDriver():
     chrome_options = webdriver.ChromeOptions()
+    # head less
+    #chrome_options.add_argument('headless')
     chrome_options.add_argument("--user-data-dir=selenium")
     chrome_options.add_argument(
         "user-agent=Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36")
@@ -107,6 +109,9 @@ def download_image_with_retry(img_url, title, save_filename, retry_count=0):
 def login():
     driver = createChromeDriver()
     driver.get('https://nid.naver.com/nidlogin.login?mode=form&url=https%3A%2F%2Fwww.naver.com')
+    print('please press "ctrl+c"')
+    while True:
+        time.sleep(1)
 
 
 def downloadImageByArticleByArticleUrl(url):
@@ -215,19 +220,19 @@ def getArticleUrlListByList(url):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(formatter_class=argparse.ArgumentDefaultsHelpFormatter)
-    parser.add_argument("--login", type=str, help="login")
-    parser.add_argument("--article-url", type=str,
+    parser.add_argument("-l", "--login", help="login", action='store_true')
+    parser.add_argument("--headless", help="headless", action='store_true')
+    parser.add_argument("-au", "--article-url", type=str,
                         help="download image in article (https://cafe.naver.com/ArticleRead.nhn....) ")
-    parser.add_argument("--list-url", type=str,
+    parser.add_argument("-lu", "--list-url", type=str,
                         help="download image in article list (https://cafe.naver.com/ArticleList.nhn...)")
     args = parser.parse_args()
-    if args.login is not None:
+    if args.login:
         login()
-    elif args.article is not None:
-        downloadImageByArticleByArticleUrl(args.article)
-    elif args.list is not None:
-        articles_url = getArticleUrlListByList(
-            'https://cafe.naver.com/ArticleList.nhn.........................')
+    elif args.article_url:
+        downloadImageByArticleByArticleUrl(args.article_url)
+    elif args.list_url:
+        articles_url = getArticleUrlListByList(args.list_url)
         for url in reversed(args.list):
             downloadImageByArticleByArticleUrl(url)
     else:
