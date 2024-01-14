@@ -10,7 +10,7 @@
 $ python3 -m venv .venv
 ```
 
-가상환경 활성와
+python 가상환경 활성화
 
 ```commandline
 # activate env
